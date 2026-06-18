@@ -2,6 +2,7 @@ import whisper
 import sys
 import io
 import string
+import clip_video
 
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -33,6 +34,10 @@ if __name__ == "__main__": #same as func main() in Go
     segments = transcribeVid(video_file)
     matches = wordMatch(segments, "friends!")
 
+    if matches :
+        clip_video.clipMatches("testvideo.mp4", matches, "outputmix.mp4")
+    else:
+        print("No matches found")
     #print(f"Found {len(segments)} segments.")
     
     print()
