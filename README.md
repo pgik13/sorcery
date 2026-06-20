@@ -36,6 +36,9 @@ pip install -r requirements.txt
 2. Enter target word
 3. Click "Complie Video"
 4. Download a single .mp4 file containing all matching segments stitched together
+<img width="3375" height="1370" alt="image" src="https://github.com/user-attachments/assets/0d8e0874-7ed7-48b9-9ad0-2a91ea9370dd" />
+<img width="2250" height="1590" alt="image" src="https://github.com/user-attachments/assets/3675252a-6256-4b1c-bf8b-4efa5c41c5e5" />
+
 
 
 # Architecture & Challenges 🧠
