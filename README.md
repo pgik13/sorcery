@@ -21,7 +21,8 @@ git clone - https://github.com/pgik13/sorcery
 cd sorcery
 
 ## Create virtual environment
-python -m venv venv
+py -m venv venv
+
 source venv/bin/activate 
 
 **Windows: venv/Scripts/activate**
