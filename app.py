@@ -46,19 +46,29 @@ if st.button("Complie Video") and uploadedFiles and targetWord:
                 tempClips = []
                 for match in matches:
                     clip = VideoFileClip(tempPath)
-                    subclip = clip.subclipped(max(0, match['start']) - 0.5, match['end'] + 0.5)
+                    start = max(0, match['start'] - 0.5)
+                    end = match['end'] + 0.5
 
-                    newTempFile = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") #subclip to new temp file to break dependency on original - part of valueerror:  i/o problem
-                    newTempPath = newTempFile.name
-                    newTempFile.close()
+                #make sure it stays in video bounds
+                if end > clip.duration:
+                    end = clip.duration
+                
+                if start < clip.start:
+                    start = clip.start
 
-                    subclip.write_videofile(newTempPath, codec='libx264', audio_codec='aac')
+                subclip = clip.subclipped(start, end)
 
-                    subclip.close()
-                    clip.close() # explicitly close original clip to release OS handle 
+                newTempFile = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") #subclip to new temp file to break dependency on original - part of valueerror:  i/o problem
+                newTempPath = newTempFile.name
+                newTempFile.close()
+
+                subclip.write_videofile(newTempPath, codec='libx264', audio_codec='aac')
+
+                subclip.close()
+                clip.close() # explicitly close original clip to release OS handle 
                     
-                    newTempPaths.append(newTempPath)
-                    allClips.append(newTempPath)
+                newTempPaths.append(newTempPath)
+                allClips.append(newTempPath)
 
             progressBar.progress((i + 1) / totalFiles)
 
