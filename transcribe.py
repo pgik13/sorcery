@@ -2,7 +2,7 @@ import whisper
 import sys
 import io
 import string
-import clip_video
+#import clip_video
 
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -17,39 +17,54 @@ def transcribeVid(video_path: str):
     return result["segments"] 
 
 def wordMatch(segments, target_word):
-
     puncStrip = target_word.translate(str.maketrans('', '', string.punctuation))
 
     matches = []
-    for _, segment in enumerate(segments):
-        if puncStrip.lower() in segment['text'].lower(): 
-            matches.append({"start": segment['start'], "end": segment['end']})
-            
-    return matches #indentation matters here
 
-if __name__ == "__main__": #same as func main() in Go
+    for segment in segments: # Whisper can return segments as dicts or namedtuples depending on version
+        if isinstance(segment, dict):# This handles both formats to prevent TypeError on string indexing 
+            # Dictonary format: access with bracket 
+            text = segment['text']
+            start = segment['start']
+            end = segment['end']
+        else:
+            # Namedtuple format: access with dot
+            text = segment.text
+            start = segment.start
+            end = segment.end
+    if puncStrip.lower() in text.lower():
+            matches.append({"start": start, "end": end})
+            
+    return matches 
+
+
+
+
+
+#Testing block
+""" if __name__ == "__main__": #same as func main() in Go
     video_file = "testvideo.mp4"
 
     print("Loading model...")
     segments = transcribeVid(video_file)
     matches = wordMatch(segments, "friends!")
 
-    if matches :
-        clip_video.clipMatches("testvideo.mp4", matches, "outputmix.mp4")
-    else:
-        print("No matches found")
-    #print(f"Found {len(segments)} segments.")
+    # if matches :
+    #     clip_video.clipMatches("testvideo.mp4", matches, "outputmix.mp4")
+    # else:
+    #     print("No matches found")
+    # print(f"Found {len(segments)} segments.")
     
     print()
 
-"""  for i, segment in enumerate(segments):
+    for i, segment in enumerate(segments):
         print(f"Segment {i}:")
         print(f"    Start:{segment['start']}s")
         print(f"    End:{segment['end']}s")
         print(f"    Text:{segment['text']}")
         print("-" * 30) 
 
-    print() """
-print(f"Found {len(matches)} matches: {matches}")
+    print() 
+print(f"Found {len(matches)} matches: {matches}")  """
 
 
