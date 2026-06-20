@@ -79,6 +79,7 @@ pip install -r requirements.txt
 # Contact
 
 Built by Pius Gikunoo
+
 **LinkedIn**: https://www.linkedin.com/in/pius-gikunoo-2693b6223/
 
 **GitHub**: https://github.com/pgik13
