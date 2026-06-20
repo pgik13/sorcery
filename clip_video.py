@@ -9,7 +9,7 @@ def clipMatches(videoPath, matches, outputPath, buffer=0.5):
 
     clips = []
 
-    for _, match in enumerate(matches):
+    for match in enumerate(matches):
         start = max(0, match['start'] - buffer)
         end = match['end'] + buffer
 
