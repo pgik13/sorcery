@@ -86,3 +86,7 @@ Built by Pius Gikunoo
 **LinkedIn**: https://www.linkedin.com/in/pius-gikunoo-2693b6223/
 
 **GitHub**: https://github.com/pgik13
+
+## 📄 License
+
+MIT License. See [LICENSE](LICENSE) for details.
